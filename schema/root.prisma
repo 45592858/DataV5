@@ -1,0 +1,19 @@
+// This is the root schema file for the project.
+// It is used to define the database schema and the Prisma client.
+
+// provider supports:
+// - sqlite
+// - mysql
+// - postgresql
+// - mssql
+// - cockroachdb
+// - mongodb
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DB_URL")
+}

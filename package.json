@@ -1,0 +1,27 @@
+{
+  "name": "datav5",
+  "license": "MIT",
+  "scripts": {
+    "schema-migrate:dev":  "cross-env NODE_ENV=development npx dotenv -e .env.development -- node -r ts-node/register src/schema-migrations.ts",
+    "schema-migrate:test": "cross-env NODE_ENV=test        npx dotenv -e .env.test -- node -r ts-node/register src/schema-migrations.ts",
+    "schema-migrate:prod": "cross-env NODE_ENV=production  npx dotenv -e .env.production -- node -r ts-node/register src/schema-migrations.ts",
+    "data-migrate:dev":    "cross-env NODE_ENV=development npx dotenv -e .env.development -- node -r ts-node/register src/data-migrations.ts dev",
+    "data-migrate:test":   "cross-env NODE_ENV=test        npx dotenv -e .env.test -- node -r ts-node/register src/data-migrations.ts test",
+    "data-migrate:prod":   "cross-env NODE_ENV=production  npx dotenv -e .env.production -- node -r ts-node/register src/data-migrations.ts prod",
+    "data-query:dev":      "cross-env NODE_ENV=development npx dotenv -e .env.development -- npx prisma studio",
+    "data-query:test":     "cross-env NODE_ENV=test        npx dotenv -e .env.test -- npx prisma studio",
+    "data-query:prod":     "cross-env NODE_ENV=production  npx dotenv -e .env.production -- npx prisma studio"
+  },
+  "dependencies": {
+    "@prisma/client": "6.5.0",
+    "@types/node": "22.13.10",
+    "cross-env": "7.0.3",
+    "dotenv": "16.4.5"
+  },
+  "devDependencies": {
+    "prisma": "6.5.0",
+    "ts-node": "10.9.2",
+    "typescript": "5.8.2",
+    "dotenv-cli": "7.4.1"
+  }
+}
