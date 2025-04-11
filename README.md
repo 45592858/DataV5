@@ -2,6 +2,10 @@
 
 Simplifying Database Migrations, Data Initialization, and Data Management with Full Control for Developers.
 
+<p align="center">
+<a href="https://github.com/45592858/DataV5/blob/main/README_zh.md"><b>中文</b></a> 
+</p>
+
 
 
 ## Getting started
@@ -216,4 +220,4 @@ DB_URL="mongodb://USERNAME:PASSWORD@HOST/DATABASE?authSource=admin&retryWrites=t
 
 - If it's helpful to you, ` ⭐️ Star me`
 - Feel free to Integrate above schema migration and data migration into your  DevOps, CI/CD process
-- To report issues or contribute, please contact us at [gmyjm@qq.com](mailto:gmyjm@qq.com?subject=[GitHub]%20DataV5%20Suports) to help the tool more powerful
+- To report issues or contribute, please contact us at [gmyjm@qq.com](mailto:gmyjm@qq.com?subject=[GitHub]%20DataV5%20Supports) to help the tool more powerful
