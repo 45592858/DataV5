@@ -2,10 +2,6 @@
 
 让我们为开发者简化数据库迁移、数据初始化与数据管理，实现全面可控。
 
-## 关于本项目
-
-- 本项目依赖于 Node.js 和 [Prisma](https://github.com/prisma/prisma)（下一代 Node.js ORM 工具）
-- 若您希望了解本项目背后的技术，请参考 [Prisma 官方文档](https://www.prisma.io/docs/orm)
 
 ## 模型迁移指南（Schema Migration）
 
@@ -198,3 +194,9 @@ npm run data-migration test
 # 生产环境
 npm run data-migration prod
 ```
+
+
+## 关于本项目
+
+- 本项目依赖于 Node.js 和 [Prisma](https://github.com/prisma/prisma)（下一代 Node.js ORM 工具）
+- 若您希望了解本项目背后的技术，请参考 [Prisma 官方文档](https://www.prisma.io/docs/orm)

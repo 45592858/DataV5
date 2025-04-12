@@ -1,6 +1,7 @@
 # DataV5 - Database Version Control
 
 Simplifying Database Migrations, Data Initialization, and Data Management with Full Control for Developers.
+Never modify the database manually; always use schema files to control changes.
 
 <p align="center">
 <a href="https://github.com/45592858/DataV5/blob/main/README_zh.md"><b>中文</b></a> 

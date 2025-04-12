@@ -7,11 +7,6 @@ Let's **simplify** database migrations, data initialization, and data management
 </p>
 
 
-## About this project
-
-- It depends on Node.js and [Prisma](https://github.com/prisma/prisma), the next-generation ORM for Node.js.
-- If you want to understand the technology behind the project, please refer to the [Prisma Docs](https://www.prisma.io/docs/orm).
-
 ## Schema Migration Guide
 
 ### Overview
@@ -203,3 +198,9 @@ npm run data-migration test
 # Production environment
 npm run data-migration prod
 ```
+
+
+## About this project
+
+- It depends on Node.js and [Prisma](https://github.com/prisma/prisma), the next-generation ORM for Node.js.
+- If you want to understand the technology behind the project, please refer to the [Prisma Docs](https://www.prisma.io/docs/orm).
