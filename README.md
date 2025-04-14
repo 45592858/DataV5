@@ -1,224 +1,103 @@
 # DataV5 - Database Version Control
 
-Simplifying Database Migrations, Data Initialization, and Data Management with Full Control for Developers.
-Never modify the database manually; always use schema files to control changes.
+Simplify database migrations and data management — no more manual database changes. Use schema files to keep everything under control.
 
 <p align="center">
 <a href="https://github.com/45592858/DataV5/blob/main/README_zh.md"><b>中文</b></a> 
 </p>
 
+---
 
+## Quick Start
 
-## Getting started
-
-### 1. Clone the entire repo
-
-```
+```bash
+# 1. Clone the repo
 git clone https://github.com/45592858/DataV5.git --depth=1
-```
 
-### 2. Install npm dependencies
-
-```
+# 2. Install dependencies
 cd DataV5
 npm install
-```
 
-### 3. Create the database
-
-Run the following command to create your SQLite database file. This also creates the `User` and `Post` tables that are defined in [`schema files`](./schema):
-
-```
+# 3. Create the database
 npm run schema-migrate:dev dev
-```
 
-### 4. Seed the data
-
-Execute the script with this command:
-
-```
+# 4. Seed the data
 npm run data-migrate:dev
-```
 
-### 5. Check the data (optional)
-
-Execute the script with this command:
-
-```
+# 5. (Optional) Query the data
 npm run data-query:dev
 ```
 
+---
 
+## Apply Changes in Dev Environment
 
-## Migrate schema changes or data changes (dev phase)
+### Update Schema
 
-### 1. Update your model
+Modify your schema (model files) under `./schema` (e.g., add a new table like `Profile`), then run:
 
-The first step is to add a new table, e.g. called `Profile`, to the database, by adding a new model to your [`schema files`](./schema/module-01.prisma) and then running a migration afterwards:
-
-```diff
-// module-01.prisma
-
-model Post {
-  id        Int     @default(autoincrement()) @id
-  title     String
-  content   String?
-  published Boolean @default(false)
-  author    User?   @relation(fields: [authorId], references: [id])
-  authorId  Int
-}
-
-model User {
-  id      Int      @default(autoincrement()) @id
-  name    String?
-  email   String   @unique
-  posts   Post[]
-+ profile Profile?
-}
-
-+model Profile {
-+  id     Int     @default(autoincrement()) @id
-+  bio    String?
-+  userId Int     @unique
-+  user   User    @relation(fields: [userId], references: [id])
-+}
-```
-
-Once you've updated your data model, you can execute the changes against your database with the following command:
-
-```
+```bash
 npm run schema-migrate:dev dev
 ```
 
-### 2. Update your data (for any purpose e.g. Initialization config / Testing data etc ...)
+### Update Data
 
-Start by adding a new SQL statement (e.g. `INSERT`, `UPDATE`, etc...). You can do this by updating [`data files`](./data/20250202-001_dev_init.sql) and then running a migration afterwards:
+Edit SQL files under `./data`, then run:
 
-```diff
-// 20250202-001_dev_init.sql
-
-INSERT INTO Post (id,title,content,authorId) VALUES (4, 'Post 4', 'Content 4', 4);
-INSERT INTO Post (id,title,content,authorId) VALUES (5, 'Post 5', 'Content 5', 5);
-INSERT INTO Post (id,title,content,authorId) VALUES (6, 'Post 6', 'Content 6', 6);
-+INSERT INTO Post (id,title,content,authorId) VALUES (7, 'Post 7', 'Content 7', 6);
-```
-
-Once you've updated your data file, you can execute the changes to your database with the following command:
-
-```
+```bash
 npm run data-migrate:dev
 ```
 
+---
 
+## Promote Changes to Test/Prod
 
-## Migrate schema changes or data changes (from dev to test/prod)
+After development:
 
-Once you've completed your development work, you can `commit`  your  [`schema files`](./schema) and [`data files`](./data) with your source code to your source code repository, and then running a migration afterwards.
-
-Check out your source code with just commit, then you can migrate the schema changes against your testing environment database with the following command:
-
-```
+```bash
+# Migrate schema to test
 npm run schema-migrate:test deploy
-```
 
-Check out your `commit` just now, then you can migrate the data changes against your testing environment database with the following command:
-
-```
+# Migrate data to test
 npm run data-migrate:test
 ```
 
+---
 
+## Use Other Databases
 
-## Switch to another database (e.g. PostgreSQL, MySQL, SQL Server, MongoDB)
+Update `schema/root.prisma` with a provider and configure the `DB_URL` in `.env.*`.
 
-If you want to try this example with another database than SQLite, you can adjust the database connection in [`root.prisma`](./schema/root.prisma) by reconfiguring the `datasource` block.
+Examples:
 
 ### PostgreSQL
-
-For PostgreSQL, the connection URL has the following structure:
-
-```
-datasource db {
-  provider = "postgresql"
-  url      = env("DB_URL")
-}
-```
-
-And configure the [`DB_URL`](./env.development) as follows:
-```
-DB_URL="postgresql://USER:PASSWORD@HOST:PORT/DATABASE?schema=SCHEMA" 
-```
-
-Here is an example connection string with a local PostgreSQL database:
-
-```
-DB_URL="postgresql://janedoe:mypassword@localhost:5432/notesapi?schema=public"
+```prisma
+provider = "postgresql"
+DB_URL="postgresql://user:pass@localhost:5432/db?schema=public"
 ```
 
 ### MySQL
-
-For MySQL, the connection URL has the following structure:
-
-```
-datasource db {
-  provider = "mysql"
-  url      = env("DB_URL")
-}
-```
-
-And configure the [`DB_URL`](./env.development) as follows:
-```
-DB_URL="mysql://USER:PASSWORD@HOST:PORT/DATABASE" 
-```
-
-Here is an example connection string with a local MySQL database:
-
-```
-DB_URL="mysql://janedoe:mypassword@localhost:3306/notesapi"
-```
-
-### Microsoft SQL Server
-
-Here is an example connection string with a local Microsoft SQL Server database:
-
 ```prisma
-datasource db {
-  provider = "sqlserver"
-  url      = env("DB_URL")
-}
+provider = "mysql"
+DB_URL="mysql://user:pass@localhost:3306/db"
 ```
 
-And configure the [`DB_URL`](./env.development) as follows:
-```
-DB_URL="sqlserver://localhost:1433;initial catalog=sample;user=sa;password=mypassword;"
+### SQL Server
+```prisma
+provider = "sqlserver"
+DB_URL="sqlserver://localhost:1433;initial catalog=db;user=sa;password=pass;"
 ```
 
 ### MongoDB
-
-Here is an example connection string with a local MongoDB database:
-
 ```prisma
-datasource db {
-  provider = "mongodb"
-  url      = env("DB_URL")
-}
+provider = "mongodb"
+DB_URL="mongodb://user:pass@localhost/db?authSource=admin"
 ```
 
-And configure the [`DB_URL`](./env.development) as follows:
-```
-DB_URL="mongodb://USERNAME:PASSWORD@HOST/DATABASE?authSource=admin&retryWrites=true&w=majority"
-```
+---
 
+## Docs & Contact
 
-
-## Documentation
-
-- Check out the [DataV5 docs](https://github.com/45592858/DataV5/wiki)
-
-
-
-## Next steps
-
-- If it's helpful to you, ` ⭐️ Star me`
-- Feel free to Integrate above schema migration and data migration into your  DevOps, CI/CD process
-- To report issues or contribute, please contact us at [gmyjm@qq.com](mailto:gmyjm@qq.com?subject=[GitHub]%20DataV5%20Supports) to help the tool more powerful
+- 📘 [Read the Docs](https://github.com/45592858/DataV5/wiki)
+- ⭐️ Star the repo if helpful
+- 🛠 Contribute or report issues: [gmyjm@qq.com](mailto:gmyjm@qq.com?subject=[GitHub]%20DataV5%20Supports)
